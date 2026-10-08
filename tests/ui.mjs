@@ -16,6 +16,7 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
+    await page.route("**/config.js", route => route.fulfill({ contentType: "text/javascript", body: 'export const CONFIG = { supabaseUrl: "", publishableKey: "", turnstileSiteKey: "", siteUrl: "", contactUrl: "", operatorName: "" };' }));
     await page.goto(address);
     await page.locator("#setup-notice").waitFor({ state: "visible" });
     assert.equal(await page.locator("#submit-post").isDisabled(), true);
