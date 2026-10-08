@@ -10,6 +10,8 @@
 
 画面・SQL・Edge Function・管理手順を実装しています。SupabaseとTurnstileはまだ作成されていないため、現在の画面は「準備中」です。接続前に保存できない投稿を成功扱いにはしません。
 
+専用リポジトリへのソース反映は完了しています。GitHub Actionsでも秘密値検査・19件の自動テストが成功しました。設定不足のためPages公開は保留中です。
+
 **Supabase実環境での保存とGitHub Pagesでの稼働は未確認です。** ローカル確認の結果と残っている確認項目は [TEST-RESULTS.md](./TEST-RESULTS.md) に記載します。
 
 ## 作成した機能
@@ -153,6 +155,8 @@ git push -u origin main
 ```
 
 上記はこのフォルダーにGitの初期コミットがある場合の手順です。まだ初期化されていない場合はCodexに依頼してください。親フォルダーや数学サイトでGitの設定を変えないでください。
+
+今回のローカルフォルダーは初期化・origin設定済みなので、上記の `remote add` を繰り返す必要はありません。追加設定の反映はCodexに依頼するか、設定変更後に `git add public/config.js`、`git commit -m "Configure public connection"`、`git push` を1行ずつ実行します。GitHubへの認証が求められた場合はご自身で対応してください。
 
 GitHubの専用リポジトリで **Settings → Pages → Build and deployment → Source → GitHub Actions** を選びます。**Actions → Publish good-things to GitHub Pages → Run workflow** から実行できます。以降はmainへの反映時に自動で検査・ビルド・公開します。[GitHubの公式手順](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
 

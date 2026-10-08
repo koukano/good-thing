@@ -13,8 +13,12 @@
 | JavaScriptの構文 | node --check | app.js、build.mjs成功 |
 | 秘密値のパターン検査 | check-secrets.mjs | 実値のsecret/service_role・GitHubトークン・秘密鍵を検出せず |
 | 公開用OGP画像 | ChromeでSVGを1200×630のPNGに変換 | 生成成功 |
+| GitHubへの反映 | koukano/good-thingのmain | 34ファイル反映、ローカルとの差分なし |
+| GitHub Actions | Ubuntu・Node.js 22 | 依存導入・秘密値検査・19件のテスト成功、公開処理は設定不足で保留 |
 
 19件の内訳は、入力4件、DB9件、Edge API5件、公開ビルド1件です。
+
+[確認したGitHub Actions実行](https://github.com/koukano/good-thing/actions/runs/37798271823)は成功しました。`configure-pages`、公開ビルド、アップロード、deployは意図どおりスキップされており、GitHub Pagesの公開完了を意味しません。
 
 ### DB・APIで確認した内容
 
