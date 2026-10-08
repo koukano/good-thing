@@ -2,7 +2,7 @@
 
 ## 実施した確認
 
-ローカルで実際に以下を実行しました。Supabase未作成のため、クラウド実環境への接続試験とは区別します。
+ローカルでの確認と、作成したSupabase実環境での確認を以下に分けて記載します。実環境の投稿保存・公開サイトの稼働確認はまだ完了していません。
 
 | 確認 | 環境 | 結果 |
 |---|---|---|
@@ -15,6 +15,11 @@
 | 公開用OGP画像 | ChromeでSVGを1200×630のPNGに変換 | 生成成功 |
 | GitHubへの反映 | koukano/good-thingのmain | 34ファイル反映、ローカルとの差分なし |
 | GitHub Actions | Ubuntu・Node.js 22 | 依存導入・秘密値検査・19件のテスト成功、公開処理は設定不足で保留 |
+| Supabase公開用キー | 実プロジェクトのAuth settings API | HTTP 200、キーの有効性を確認 |
+| 公開キーでの直接テーブル取得 | 実プロジェクトのposts・reports | HTTP 401 / PostgreSQL 42501で権限拒否 |
+| 公開キーでの直接関数実行 | 実プロジェクトのgood_things_list・good_things_moderate | HTTP 401 / PostgreSQL 42501で権限拒否 |
+
+2026年10月9日、利用者から初期SQL実行時の「Success. No rows returned」の報告を受け、その後に上記4つの実環境での拒否を確認しました。管理RPCの検証には架空の投稿IDを使用し、変更が行われる前に関数実行権限で拒否されたことを確認しています。投稿本文や通報データは取得していません。
 
 19件の内訳は、入力4件、DB9件、Edge API5件、公開ビルド1件です。
 
@@ -49,7 +54,7 @@ SQL試験はPostgreSQLのローカルエンジンで行いました。PGliteは1
 
 ## 未確認の項目
 
-- Supabase上にSQLを適用し、Edge Functionをデプロイできること
+- SupabaseのメンテナンスSQL適用、Edge Functionのデプロイ
 - 実際のTurnstile widgetと、実hostnameを用いた検証
 - Supabaseへの投稿保存・ページ更新や別利用者からの再取得
 - Supabaseへのいいね・通報保存、同時アクセス時の整合性
