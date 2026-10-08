@@ -2,7 +2,7 @@
 export const CONFIG = Object.freeze({
   supabaseUrl: "https://coqcjxeovhwpifdhpaqf.supabase.co",
   publishableKey: "sb_publishable_9-fFvcjPAqeHpcI6545h7Q_4SMfl0Hn",
-  turnstileSiteKey: "",
+  turnstileSiteKey: "0x4AAAAAAFRbodpQQjB5R_AE",
   siteUrl: "",
   contactUrl: "",
   operatorName: "",
