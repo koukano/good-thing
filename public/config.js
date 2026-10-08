@@ -1,7 +1,7 @@
 // 公開用設定だけを記入してください。service_role / secretキーは絶対に記入しません。
 export const CONFIG = Object.freeze({
-  supabaseUrl: "",
-  publishableKey: "",
+  supabaseUrl: "https://coqcjxeovhwpifdhpaqf.supabase.co",
+  publishableKey: "sb_publishable_9-fFvcjPAqeHpcI6545h7Q_4SMfl0Hn",
   turnstileSiteKey: "",
   siteUrl: "",
   contactUrl: "",
