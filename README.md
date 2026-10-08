@@ -8,7 +8,7 @@
 
 ## 現在の状態
 
-画面・SQL・Edge Function・管理手順を実装しています。Supabaseプロジェクトは作成され、Project URLと公開用publishableキーを設定しました。DB・Edge Function・Turnstileの設定はまだ完了していないため、現在の画面は「準備中」です。接続前に保存できない投稿を成功扱いにはしません。
+画面・SQL・Edge Function・管理手順を実装しています。Supabaseプロジェクトを作成し、Project URLと公開用publishableキーを設定、DBの初期SQLを実行しました。実環境でも公開キーからの投稿・通報テーブル、一覧RPC、管理RPCへの直接アクセスが拒否されることを確認しています。メンテナンスSQL・Edge Function・Turnstileの設定はまだ完了していないため、現在の画面は「準備中」です。接続前に保存できない投稿を成功扱いにはしません。
 
 専用リポジトリへのソース反映は完了しています。GitHub Actionsでも秘密値検査・19件の自動テストが成功しました。設定不足のためPages公開は保留中です。
 
