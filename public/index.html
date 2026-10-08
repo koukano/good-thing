@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="今日あった、小さな「よかった」を残す場所。名前を明かさず、日常のうれしい出来事や感謝をそっと分かち合えます。">
+  <meta name="theme-color" content="#edf6fb">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="よかった。｜今日の小さな幸せを、そっと。">
+  <meta property="og:description" content="今日あった、小さな「よかった」を残す場所。匿名で日常の幸せを分かち合いませんか。">
+  <!-- canonical / og:url / og:image は実際の公開URL設定後、ビルドで追加します。 -->
+  <title>よかった。｜今日の小さな幸せを、そっと。</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <header class="site-header"><a class="wordmark" href="./">よかった<span>。</span></a><a class="header-link" href="#compose">小さな幸せを残す <span aria-hidden="true">↗</span></a></header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-mark" aria-hidden="true">✳</div>
+      <p class="eyebrow">いつもの日にも、うれしいこと。</p>
+      <h1 id="hero-title">今日あった、<br>小さな「よかった」を。</h1>
+      <p class="hero-description">あたたかいごはん。帰り道のきれいな空。<br>誰かの、やさしいひとこと。<br>そんな日常を、ここにそっと残してみませんか。</p>
+      <p class="anonymous-label"><span aria-hidden="true">○</span> 名前も、ログインもいりません</p>
+    </section>
+    <div id="setup-notice" class="notice" role="status" hidden>ただいま準備中です。投稿の受付は、接続設定が完了してから始まります。</div>
+    <section id="compose" class="compose card" aria-labelledby="compose-title">
+      <div class="section-heading"><h2 id="compose-title">あなたの「よかった」</h2><span class="small-label">匿名で投稿</span></div>
+      <form id="post-form">
+        <label class="sr-only" for="post-body">今日あったよかったこと（300文字以内）</label>
+        <textarea id="post-body" rows="5" placeholder="今日、どんな「よかった」がありましたか？" aria-describedby="post-help char-count" required></textarea>
+        <div class="input-meta"><span>小さなことでも、ひとことでも。</span><output id="char-count" for="post-body">0 / 300</output></div>
+        <div class="honeypot" aria-hidden="true"><label for="website">ウェブサイト</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <p id="post-help" class="form-help">名前・連絡先などの個人情報や、誰かを傷つける言葉は書かないでください。投稿は誰でも閲覧できます。</p>
+        <label class="consent"><input id="consent" type="checkbox" required><span><a href="./terms.html">利用規約</a>と<a href="./privacy.html">プライバシーポリシー</a>に同意する</span></label>
+        <div class="form-bottom"><p class="gentle-note">あなたのひとことが、誰かの心をあたためるかも。</p><button id="submit-post" class="primary" type="submit" disabled>よかったを残す <span aria-hidden="true">↗</span></button></div>
+      </form>
+      <p id="post-status" class="status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="feed" aria-labelledby="feed-title">
+      <div class="feed-heading"><div><p class="eyebrow">ひと息ついて、読んでみる。</p><h2 id="feed-title">みんなの「よかった」</h2></div><span class="small-label">新しい順</span></div>
+      <p class="feed-intro">どこかで生まれた、小さな幸せのおすそわけ。</p>
+      <div id="feed-status" class="feed-state" role="status" aria-live="polite">読み込み中です…</div>
+      <button id="retry-feed" class="secondary" type="button" hidden>もう一度読み込む</button>
+      <div id="posts" class="post-grid" data-nosnippet></div>
+      <div class="load-more"><button id="load-more" class="secondary" type="button" hidden>もっと見る <span aria-hidden="true">↓</span></button></div>
+    </section>
+    <aside class="closing-note"><span aria-hidden="true">✳</span><p>特別な一日じゃなくても。<br>「よかった」は、きっとどこかに。</p></aside>
+  </main>
+  <footer class="site-footer"><a class="wordmark" href="./">よかった<span>。</span></a><nav aria-label="サイト情報"><a href="./terms.html">利用規約</a><a href="./privacy.html">プライバシーポリシー</a><a id="contact-link" href="./privacy.html#contact">お問い合わせ</a></nav><p>今日の小さな幸せを、そっと。</p></footer>
+  <dialog id="challenge-dialog" aria-labelledby="challenge-title"><h2 id="challenge-title">安心して使える場所にするために</h2><p>操作を完了する前に、安全確認にご協力ください。</p><div id="challenge-widget"></div><p id="challenge-status" role="status"></p><button id="cancel-challenge" class="secondary" type="button">キャンセル</button></dialog>
+  <dialog id="report-dialog" aria-labelledby="report-title"><form id="report-form"><h2 id="report-title">投稿を通報する</h2><p>気になる投稿を運営に知らせます。理由を選んでください。</p><label for="report-reason">通報の理由</label><select id="report-reason" required><option value="personal">個人情報が含まれている</option><option value="abuse">誹謗中傷・攻撃的な内容</option><option value="spam">宣伝・スパム</option><option value="other">その他の不適切な内容</option></select><p class="form-help">通報だけで自動削除はされません。運営が内容を確認します。</p><p id="report-status" role="status"></p><div class="dialog-actions"><button id="cancel-report" class="secondary" type="button">キャンセル</button><button id="submit-report" class="primary" type="submit">運営に知らせる</button></div></form></dialog>
+  <noscript><p class="notice">投稿の閲覧・送信にはJavaScriptを有効にしてください。</p></noscript>
+</body>
+</html>

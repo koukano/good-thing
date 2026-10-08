@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+# 公開URL設定後、ビルド時にSitemapのURLが追加されます。

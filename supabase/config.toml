@@ -1,0 +1,5 @@
+project_id = "good-things"
+
+[functions.good-things]
+# 公開API。JWT不要ですが、書き込みはTurnstile + DB制限を必ず通します。
+verify_jwt = false
