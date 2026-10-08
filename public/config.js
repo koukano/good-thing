@@ -4,6 +4,6 @@ export const CONFIG = Object.freeze({
   publishableKey: "sb_publishable_9-fFvcjPAqeHpcI6545h7Q_4SMfl0Hn",
   turnstileSiteKey: "0x4AAAAAAFRbodpQQjB5R_AE",
   siteUrl: "",
-  contactUrl: "",
-  operatorName: "",
+  contactUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeB9rH2f9i47NRo_pg4Z76Frk-IpUq9u2-p0oKk3o0xRxrhuw/viewform",
+  operatorName: "koukano",
 });

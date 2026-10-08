@@ -56,7 +56,7 @@ SQL試験はPostgreSQLのローカルエンジンで行いました。PGliteは1
 
 ## 未確認の項目
 
-- SupabaseのメンテナンスSQL適用、Edge Functionのデプロイ
+- SupabaseのメンテナンスSQL適用
 - 実際のTurnstile widgetと、実hostnameを用いた検証
 - Supabaseへの投稿保存・ページ更新や別利用者からの再取得
 - Supabaseへのいいね・通報保存、同時アクセス時の整合性
@@ -78,3 +78,16 @@ node scripts/check-secrets.mjs
 ```
 
 画面テストの結果・画像は `test-results` に生成します。このフォルダーとテスト用の一時設定はGitHubやPagesへ公開しません。
+
+## 実環境の追加確認（2026-10-09）
+
+利用者が good-things 関数をデプロイし、JWT検証をOFFにした後、公開APIに対して確認しました。
+
+- 許可したOriginからのGETはHTTP 200で、データベース由来の空の一覧（posts: [], nextCursor: null）を返しました。
+- CORSの許可Originは https://koukano.github.io でした。
+- 許可外OriginはHTTP 403で拒否されました。
+- 空のJSONを送るPOSTはHTTP 400で拒否されました。投稿データは作成していません。
+
+この確認は、実際の投稿・いいね・通報の保存や、Turnstile検証の成功を確認したものではありません。
+
+問い合わせフォームの回答者URLは未ログインのHTTP取得で200を返し、サイト名・必須の問い合わせ内容・任意の返信先メールアドレスが表示されました。回答の送信や管理画面の非公開設定は未確認です。運営者名と問い合わせURL設定後も自動テスト19件はすべて合格しました。
