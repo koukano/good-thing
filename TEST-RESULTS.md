@@ -23,6 +23,8 @@
 
 19件の内訳は、入力4件、DB9件、Edge API5件、公開ビルド1件です。
 
+2026年10月9日、Supabaseの画面で貼り付けて公開できる `dashboard-good-things.ts` を追加しました。生成済みファイルの更新漏れを検査し、このファイルを使うEdge APIテストを含む19件を再実行して、すべて成功しました。実環境への関数デプロイはまだです。
+
 [確認したGitHub Actions実行](https://github.com/koukano/good-thing/actions/runs/37798271823)は成功しました。`configure-pages`、公開ビルド、アップロード、deployは意図どおりスキップされており、GitHub Pagesの公開完了を意味しません。
 
 ### DB・APIで確認した内容

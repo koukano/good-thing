@@ -8,7 +8,7 @@
 
 ## 現在の状態
 
-画面・SQL・Edge Function・管理手順を実装しています。Supabaseプロジェクトを作成し、Project URLと公開用publishableキーを設定、DBの初期SQLを実行しました。実環境でも公開キーからの投稿・通報テーブル、一覧RPC、管理RPCへの直接アクセスが拒否されることを確認しています。メンテナンスSQL・Edge Function・Turnstileの設定はまだ完了していないため、現在の画面は「準備中」です。接続前に保存できない投稿を成功扱いにはしません。
+画面・SQL・Edge Function・管理手順を実装しています。Supabaseプロジェクトを作成し、Project URLと公開用publishableキーを設定、DBの初期SQLを実行しました。Turnstileの公開用Site keyも設定しました。実環境でも公開キーからの投稿・通報テーブル、一覧RPC、管理RPCへの直接アクセスが拒否されることを確認しています。メンテナンスSQL・Edge Function・サーバーの秘密設定はまだ完了していないため、投稿受付の準備はまだ完了していません。接続前に保存できない投稿を成功扱いにはしません。
 
 専用リポジトリへのソース反映は完了しています。GitHub Actionsでも秘密値検査・19件の自動テストが成功しました。設定不足のためPages公開は保留中です。
 
@@ -40,6 +40,7 @@ good-things/
 │  ├─ config.toml
 │  ├─ migrations/202610080001_initial.sql
 │  ├─ functions/good-things/index.ts
+│  ├─ dashboard-good-things.ts ← 管理画面に貼り付けるための生成済みファイル
 │  └─ maintenance.sql
 ├─ scripts/                   ← プレビュー・ビルド・秘密値検査
 ├─ tests/                     ← ローカルの画面・SQL・APIテスト
@@ -114,6 +115,18 @@ Supabaseの **Edge Functions → Secrets** で、次の名前と値を登録し�
 ローカルで実DBへの接続を試す場合だけ、`ALLOWED_ORIGINS` に `http://127.0.0.1:4173` をカンマ区切りで追加します。Turnstile側・`TURNSTILE_HOSTNAMES` 側も開発用ホストを合わせます。開発用許可は公開前に取り除きます。本番でCloudflareのテスト用キーは使わないでください。
 
 ### 5. Edge Functionを公開する
+
+**ブラウザーの画面だけで公開する方法（初心者向け）**
+
+1. `supabase/dashboard-good-things.ts` を開いて全文をコピーします。
+2. SupabaseのEdge Functionsで **Deploy a new function → Via Editor** を選びます。
+3. 関数名を **good-things** にし、`index.ts` の内容をコピーした全文で置き換えます。
+4. **Deploy function** を押します。
+5. 関数のDetailsまたはSettingsで **Verify JWT with legacy secret** を無効にします。初期状態のままではpublishableキーで呼び出せません。
+
+この生成済みファイルもGitHubで管理しています。元の検証コード・関数を変更した場合は、`node scripts/bundle-function.mjs` で作り直します。テストは生成済みファイルの更新漏れと、そのファイルでのAPI動作を確認します。[Supabaseの画面での公開手順](https://supabase.com/docs/guides/functions/quickstart-dashboard)。
+
+**CLIで公開する方法（上の方法で公開した場合は不要）**
 
 [Node.jsのLTS版](https://nodejs.org/)（22以降）をインストールします。エクスプローラーで `good-things` を開き、アドレス欄に `powershell` と入力してEnterを押すと、このフォルダーでPowerShellが開きます。
 

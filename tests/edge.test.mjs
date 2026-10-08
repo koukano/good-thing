@@ -33,7 +33,7 @@ before(async () => {
     }
     throw new Error("unexpected network request");
   };
-  let source = await readFile(new URL("../supabase/functions/good-things/index.ts", import.meta.url), "utf8");
+  let source = await readFile(new URL("../supabase/dashboard-good-things.ts", import.meta.url), "utf8");
   source = source.replace('"../../../public/validation.js"', JSON.stringify(new URL("../public/validation.js", import.meta.url).href));
   const js = stripTypeScriptTypes(source, { mode: "transform" });
   await import(`data:text/javascript;base64,${Buffer.from(js).toString("base64")}`);
