@@ -4,7 +4,7 @@ export function normalizeBody(value) {
 export function countCharacters(value) { return Array.from(value.normalize("NFC")).length; }
 export function validateBody(value) {
   const body = normalizeBody(value);
-  if (!body.replace(/[\s\u200B-\u200D\u2060\uFEFF]/gu, "")) return "よかったことを入力してください。";
+  if (!body.replace(/[\s\u200B-\u200D\u2060\uFEFF]/gu, "")) return "話したいことを入力してください。";
   if (countCharacters(body) > 300) return "300文字以内で入力してください。";
   if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/u.test(body)) return "使えない制御文字が含まれています。";
   return "";

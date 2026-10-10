@@ -11,19 +11,20 @@ before(async () => {
   db = new PGlite();
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls;");
   await db.exec(await readFile(new URL("../supabase/migrations/202610080001_initial.sql", import.meta.url), "utf8"));
+  await db.exec(await readFile(new URL("../supabase/migrations/202610090001_read_counts.sql", import.meta.url), "utf8"));
 });
 after(async () => { await db?.close(); });
 async function write(action, actor, ip, body = null, request = null, id = null, reason = null) {
   return (await db.query("select public.good_things_write($1,$2,$3,$4,$5,$6,$7) result", [action, actor, ip, body, request, id, reason])).rows[0].result;
 }
 test("DB：全テーブルのRLSが有効、一般利用者は直接読み書き・RPC・管理ができない", async () => {
-  const rows = (await db.query("select relname, relrowsecurity from pg_class where relname in ('posts','likes','reports','rate_buckets','moderation_log')")).rows;
-  assert.equal(rows.length, 5);
+  const rows = (await db.query("select relname, relrowsecurity from pg_class where relname in ('posts','likes','reports','rate_buckets','moderation_log','post_views')")).rows;
+  assert.equal(rows.length, 6);
   assert.ok(rows.every(x => x.relrowsecurity));
   for (const role of ["anon", "authenticated"]) {
     await db.exec(`set role ${role};`);
     try {
-      for (const query of ["select * from public.posts", "insert into public.posts(body) values('bad')", "update public.posts set status='visible'", "delete from public.posts", "select * from public.reports", "select public.good_things_list(repeat('0',64))", "select public.good_things_moderate(gen_random_uuid(),'hidden','reason')"]) {
+      for (const query of ["select * from public.posts", "insert into public.posts(body) values('bad')", "update public.posts set status='visible'", "delete from public.posts", "select * from public.reports", "select * from public.post_views", "select public.good_things_list(repeat('0',64))", "select public.good_things_moderate(gen_random_uuid(),'hidden','reason')"]) {
         await assert.rejects(db.query(query), error => error.code === "42501");
       }
     } finally { await db.exec("reset role;"); }
@@ -36,7 +37,7 @@ test("DB：サービス用RPCで投稿できる。同じリクエスト再送は
     post = (await write("post", hash(1), hash(99), "お茶がおいしかった。", request)).post;
     const retry = await write("post", hash(1), hash(99), "お茶がおいしかった。", request);
     assert.equal(retry.post.id, post.id);
-    assert.deepEqual(Object.keys(post).sort(), ["body", "created_at", "id", "likes_count"]);
+    assert.deepEqual(Object.keys(post).sort(), ["body", "created_at", "id", "likes_count", "views_count"]);
   } finally { await db.exec("reset role;"); }
   assert.equal((await db.query("select count(*)::int n from public.posts")).rows[0].n, 1);
 });

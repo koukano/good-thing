@@ -13,6 +13,7 @@ test("公開ビルド：未設定では停止。実URLを指定するとSEOを�
     await cp(new URL("../public/", import.meta.url), path.join(temp, "public"), { recursive: true });
     await cp(new URL("../scripts/build.mjs", import.meta.url), path.join(temp, "scripts/build.mjs"));
     await writeFile(path.join(temp, "package.json"), '{"type":"module"}');
+    await writeFile(path.join(temp, "public/config.js"), 'export const CONFIG={supabaseUrl:"",publishableKey:"",turnstileSiteKey:"",siteUrl:"",contactUrl:"",operatorName:""};');
     const run = () => exec(process.execPath, ["scripts/build.mjs"], { cwd: temp, env: { ...process.env, SITE_URL: "" } });
     await assert.rejects(run(), error => /公開URLが未設定/.test(error.stderr));
     const fixture = { supabaseUrl: "https://fixture.supabase.co", publishableKey: "sb_publishable_test-placeholder", turnstileSiteKey: "test-placeholder", siteUrl: "https://site.example.invalid/good-things/", contactUrl: "https://contact.example.invalid/", operatorName: "テスト運営" };

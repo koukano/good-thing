@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "匿名で日常のよかったことを残す、小さな投稿サイト",
+  "description": "誰かに聞いてほしいことを匿名で書き残す投稿サイト",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "test": "node scripts/bundle-function.mjs --check && node --test tests/validation.test.mjs tests/database.test.mjs tests/edge.test.mjs tests/build.test.mjs",
+    "test": "node scripts/bundle-function.mjs --check && node --test tests/validation.test.mjs tests/database.test.mjs tests/edge.test.mjs tests/build.test.mjs tests/read-counts.test.mjs",
     "test:ui": "node tests/ui.mjs",
     "check:secrets": "node scripts/check-secrets.mjs"
   },

@@ -115,10 +115,10 @@ Deno.serve(async (request: Request) => {
       const posts = rows.slice(0, 20);
       const last = posts.at(-1);
       const nextCursor = rows.length > 20 && last ? btoa(JSON.stringify({ time: last.created_at, id: last.id })) : null;
-      return reply(200, { posts, nextCursor });
+      return reply(200, { posts, nextCursor, features: { views: true } });
     }
     const data = await readBody(request);
-    if (data.website !== "" || !uuid.test(data.visitorId || "") || !["post", "like", "report"].includes(data.action)) throw new ApiError(400, "入力内容を確認してください。");
+    if (data.website !== "" || !uuid.test(data.visitorId || "") || !["post", "like", "report", "view"].includes(data.action)) throw new ApiError(400, "入力内容を確認してください。");
     const payload: Record<string, unknown> = { p_action: data.action, p_actor: await hash(`visitor:${data.visitorId}`), p_ip: ipHash };
     if (data.action === "post") {
       if (data.consent !== true || typeof data.body !== "string" || !uuid.test(data.requestId || "")) throw new ApiError(400, "入力と規約への同意を確認してください。");
@@ -139,7 +139,9 @@ Deno.serve(async (request: Request) => {
         payload.p_reason = data.reason;
       }
     }
-    await verifyChallenge(data.token);
+    // 閲覧は全文を開いた操作のみ。本人の人数は保証せず、DB制限と一意制約で抑止。
+    // 投稿・いいね・通報のTurnstile必須検証は維持します。
+    if (data.action !== "view") await verifyChallenge(data.token);
     return reply(200, await rpc("good_things_write", payload));
   } catch (error) {
     if (error instanceof ApiError) {
