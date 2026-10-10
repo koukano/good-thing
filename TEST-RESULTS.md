@@ -109,3 +109,13 @@ GitHub Actionsの実行37806052767でビルドとPagesデプロイが成功し�
 - 変更前の公開一覧を読み取り、投稿700acd3c-3752-4c05-b546-f60a16305483といいね数3を取得しました。
 - 新しいSQL・関数の実環境への適用と、変更後の実保存はまだ未確認です。旧コンセプトでの投稿・いいね保存の成功とは区別します。
 - 編集はgood-things内だけです。数学サイトのファイル・設定・URLは変更していません。
+
+GitHub Actions 38046745909のビルド・公開が成功し、変更後の公開サイトをPC幅1440px・スマートフォン幅390pxで実際に開きました。新しいtitle、フォーム、注意書き、カード、運営者・問い合わせリンクを確認し、JavaScript例外と横はみ出しはありませんでした。既存の投稿本文・日時・いいね数3は別ブラウザーと再読み込み後も保持されていました。サーバー未更新のため既読数は「—」です。新コンセプトでの実投稿・既読・いいね保存試験は未実施です。スマートフォン実機での試験も未実施です。
+
+変更ファイル一覧：
+- public/index.html, app.js, styles.css, validation.js
+- public/terms.html, privacy.html, og-image.svg, og-image.png
+- supabase/functions/good-things/index.ts, dashboard-good-things.ts
+- supabase/migrations/202610090001_read_counts.sql
+- tests/build.test.mjs, database.test.mjs, edge.test.mjs, ui.mjs, read-counts.test.mjs
+- package.json, README.md, TEST-RESULTS.md
