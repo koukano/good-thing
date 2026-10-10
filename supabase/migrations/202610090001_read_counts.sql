@@ -4,6 +4,9 @@ begin;
 lock table public.posts in access exclusive mode;
 create temporary table talking_migration_snapshot on commit drop as
   select count(*) as n, md5(coalesce(string_agg(to_jsonb(p)::text, '' order by p.id), '')) as digest from public.posts p;
+-- 検査用の一時テーブルもRLSを明示。通常の公開APIには公開されません。
+alter table talking_migration_snapshot enable row level security;
+revoke all on talking_migration_snapshot from public, anon, authenticated, service_role;
 alter table public.posts add column views_count integer not null default 0 check (views_count >= 0);
 create table public.post_views (
   post_id uuid not null references public.posts(id) on delete cascade,
