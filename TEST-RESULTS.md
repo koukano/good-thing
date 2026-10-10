@@ -119,3 +119,12 @@ GitHub Actions 38046745909のビルド・公開が成功し、変更後の公開
 - supabase/migrations/202610090001_read_counts.sql
 - tests/build.test.mjs, database.test.mjs, edge.test.mjs, ui.mjs, read-counts.test.mjs
 - package.json, README.md, TEST-RESULTS.md
+## Supabase関数更新後の実環境確認（2026-10-10）
+
+利用者が関数を更新した後、GETのfeatures.views=true、既存投稿のviews_countを取得しました。実際のChromeでPC幅とスマートフォン幅の独立したブラウザー識別子を使い、全文を開いたときだけ0→1→2と加算され、再開閉とページ更新後も重複しないことを確認しました。同じ識別子でAPIに直接再送してもalreadyViewed=trueで加算されませんでした。スクロールだけでは加算されず、横はみ出し・JavaScript例外もありませんでした。
+
+既存の公開投稿700acd3c-3752-4c05-b546-f60a16305483の本文・投稿日時・いいね数3は変わっていません。非公開を含むDB全体の件数をこちらから直接確認したものではありません。
+
+実環境でも公開キーからpost_viewsの取得とgood_things_deleteの実行は401（PostgreSQL 42501 permission denied）で拒否されました。削除アクセスの検査は存在しないランダムIDを使用し、実在の投稿は削除していません。
+
+新しい関数による実投稿といいね、本番の管理者による非公開・再公開は引き続き確認中です。
